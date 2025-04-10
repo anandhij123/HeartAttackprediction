@@ -105,13 +105,14 @@ encoders = create_encoders()
 # Function to load the ML model
 @st.cache_resource
 def load_model():
-    # Check if model file exists
-    if os.path.exists("heart_model.pkl"):
-        with open("heart_model.pkl", "rb") as f:
+    # Update the path to the model file if it's not in the current directory
+    model_path = "vclf_model.pkl"
+    
+    if os.path.exists(model_path):
+        with open(model_path, "rb") as f:
             model = pickle.load(f)
         return model
     else:
-        # Create a placeholder model if no saved model is found
         st.warning("No trained model found. Using a placeholder model for demonstration purposes.")
         return RandomForestClassifier(random_state=42)
 
@@ -317,6 +318,10 @@ with st.expander("Train/Update Model"):
                     # 2. Split into train/test
                     # 3. Train model (RandomForest, XGBoost, etc.)
                     # 4. Save model to pickle file
+                    
+                    # Save the trained model
+                    with open("vclf_model.pkl", "wb") as f:
+                        pickle.dump(trained_model, f)
                     
                 except Exception as e:
                     st.error(f"Error training model: {str(e)}")
