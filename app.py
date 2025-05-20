@@ -321,7 +321,7 @@ with st.expander("Train/Update Model"):
                     
                     # Save the trained model
                     with open("vclf_model.pkl", "wb") as f:
-                        pickle.dump(trained_model, f)
+                        pickle.dump("xgb_model.pkl", f)
                     
                 except Exception as e:
                     st.error(f"Error training model: {str(e)}")
